@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">challengeHW1</string>
+
+    <string-array name="email_arr">
+        <item>도메인</item>
+        <item>gmail.com</item>
+        <item>kakao.com</item>
+        <item>naver.com</item>
+        <item>직접입력</item>
+    </string-array>
+</resources>
