@@ -14,4 +14,9 @@
     <string name="pwd">비밀번호</string>
     <string name="pwd_check">비밀번호 확인</string>
     <string name="signup">회원가입</string>
+
+    <string name="name_err">이름을 입력해주세요.</string>
+    <string name="email_err">이메일을 입력해주세요.</string>
+    <string name="pwd_err">비밀번호를 입력해주세요.</string>
+    <string name="pwd_check_err">비밀번호를 다시 입력해주세요.</string>
 </resources>

@@ -5,7 +5,6 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import com.example.challengehw1.databinding.ActivityMainBinding
 
@@ -37,79 +36,34 @@ class MainActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
         }
+
+        loname.error=getString(R.string.name_err)
+        loemail.error=getString(R.string.email_err)
+        lopwd.error=getString(R.string.pwd_err)
+        lopwdcheck.error=getString(R.string.pwd_check_err)
         
         name.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus && name.text.toString()==""){
-                loname.error = "이름을 입력해주세요."
+            if(hasFocus.not()){
+                viewModel.updateData("name", name.text.toString())
             }
         }
 
         email.setOnFocusChangeListener { v, hasFocus ->
-            if (spinner.selectedItemPosition==0){
-                loemail.error = "도메인을 입력해주세요."
-            }
-            if (!hasFocus && name.text.toString()==""){
-                loemail.error = "이메일을 입력해주세요."
+            if (hasFocus.not()){
+                viewModel.updateData("email", email.text.toString())
             }
         }
 
         pwd.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus && name.text.toString()==""){
-                lopwd.error = "비밀번호를 입력해주세요."
-            }
-            if (hasFocus && name.text.toString()==""){
-                lopwd.error = null
-                lopwd.helperText="10자리 이상, 특수문자, 대문자 포함"
+            if (hasFocus.not()){
+                viewModel.updateData("pwd", pwd.text.toString())
             }
         }
 
         pwdcheck.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus && name.text.toString()==""){
-                lopwdcheck.error = "비밀번호가 다시 입력해주세요."
+            if (hasFocus.not()){
+                viewModel.updateData("check", pwdcheck.text.toString())
             }
-        }
-
-        name.addTextChangedListener { text ->
-            if(text.toString().isNotEmpty()){
-                loname.error=null
-            }
-            btn.isEnabled=!(loname.error.isNullOrEmpty() || loemail.error.isNullOrEmpty() || lopwd.error.isNullOrEmpty() || lopwdcheck.error.isNullOrEmpty())
-        }
-
-        email.addTextChangedListener { text ->
-            if(text.toString().isNotEmpty()){
-                loemail.error=null
-            }
-            btn.isEnabled=!(loname.error.isNullOrEmpty() || loemail.error.isNullOrEmpty() || lopwd.error.isNullOrEmpty() || lopwdcheck.error.isNullOrEmpty())
-        }
-
-        pwd.addTextChangedListener { text ->
-            if(text.toString().isNotEmpty()){
-                lopwd.error=null
-            }
-            if(text.isNullOrEmpty()){
-                lopwd.helperText="10자리 이상, 특수문자, 대문자 포함"
-            } else{
-                lopwd.helperText=null
-            }
-            if(text?.length ?: 0<10){
-                lopwd.error="10자리 이상 입력하세요."
-            } else if(!(text?.contains("[!\"#$%&'()*+,-./:;\\\\<=>?@\\[\\]^_`{|}~]".toRegex()) ?: false)){
-                lopwd.error="특수문자를 포함하세요."
-            } else if(!(text?.contains("[A-Z]".toRegex()) ?: false)){
-                lopwd.error="대문자를 포함하세요."
-            }
-            btn.isEnabled=!(loname.error.isNullOrEmpty() || loemail.error.isNullOrEmpty() || lopwd.error.isNullOrEmpty() || lopwdcheck.error.isNullOrEmpty())
-        }
-
-        pwdcheck.addTextChangedListener { text ->
-            if(text.toString().isNotEmpty()){
-                lopwdcheck.error=null
-            }
-            if(text.toString()!=pwd.text.toString()){
-                lopwdcheck.error="동일하지 않습니다."
-            }
-            btn.isEnabled=!(loname.error.isNullOrEmpty() || loemail.error.isNullOrEmpty() || lopwd.error.isNullOrEmpty() || lopwdcheck.error.isNullOrEmpty())
         }
 
     }
